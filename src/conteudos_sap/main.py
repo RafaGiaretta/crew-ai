@@ -18,7 +18,7 @@ def run():
     Run the crew.
     """
     inputs = {
-        'topic': 'SAP',
+        'topic': 'notícias atuais sobre modelos de IA, LLMs e inovações',
         'current_year': str(datetime.now().year)
     }
     

@@ -1,76 +1,39 @@
-blog_fetch_task:
+news_research_task:
   description: >
-    Crawl and index the top blogs, Medium posts, Dev.to articles and RSS feeds
-    related to {topic}.
-    Ensure sources are reputable and up-to-date as of {current_year}.
+    Buscar a última notícia publicada em cada uma das fontes confiáveis listadas e em perfis de especialistas no LinkedIn. 
+    Não é necessário verificar a data neste estágio. Cada notícia deve conter o título, um trecho inicial (quando disponível) e o link direto da fonte.
   expected_output: >
-    A structured list of at least 10 blog entries with title, author, date, URL,
-    and a short excerpt for each.
-  agent: blog_fetcher
+    Uma lista com a notícia mais recente de cada fonte, contendo:
+    - Título
+    - Trecho inicial (ou subtítulo, se houver)
+    - URL da fonte original
+  agent: news_seeker
 
-news_fetch_task:
+news_cleaning_task:
   description: >
-    Aggregate breaking news and recent updates from major news portals,
-    press releases and social media APIs about {topic}.
-    Focus on items published within the last 7 days of {current_year}.
+    Verificar a data de cada notícia recebida e filtrar apenas aquelas publicadas no útlimo mês. 
+    Descartar qualquer notícia fora desse intervalo. Não modificar o conteúdo.
   expected_output: >
-    A list of news items with headline, source, publication date, URL,
-    and a one-sentence summary.
-  agent: news_fetcher
+    Uma lista apenas com notícias válidas (até útlimo mês), contendo:
+    - Título
+    - Subtítulo ou trecho inicial
+    - Data de publicação confirmada
+    - URL da fonte original
+  agent: news_cleaner
 
-content_processing_task:
+news_reporting_task:
   description: >
-    Clean, deduplicate and normalize all collected blog and news items.
-    Extract metadata, detect language, and generate a 2-sentence summary
-    for each entry.
+    Para cada notícia válida recebida, gerar um resumo estruturado contendo:
+    - Título
+    - Subtítulo (ou trecho inicial da notícia)
+    - Resumo do conteúdo (em até 5 frases)
+    - Data de publicação
+    - Link da fonte
   expected_output: >
-    A JSON array of cleaned records, each containing:
-    id, title, date, source, language, metadata tags, and summary.
-  agent: content_processor
-
-topic_classification_task:
-  description: >
-    Analyze the cleaned content and categorize each record into thematic clusters
-    such as “Trends”, “Tools”, “Case Studies”, “Tutorials” and “Opinions”.
-    Use semantic similarity and keyword extraction methods.
-  expected_output: >
-    A mapping of topic clusters to lists of record IDs, plus a label for each cluster.
-  agent: topic_classifier
-
-instagram_newsletter_task:
-  description: >
-    Create an Instagram carousel newsletter from the top content clusters.
-    Write concise headlines, captions and calls-to-action optimized for Instagram
-    posts and stories.
-  expected_output: >
-    A draft Instagram carousel script with 5 slides:
-    slide image idea, headline, caption text, and CTA for each in brazilian portuguese.
-  agent: newsletter_instagram
-
-linkedin_newsletter_task:
-  description: >
-    Draft a LinkedIn newsletter article based on the most impactful clusters.
-    Provide an engaging introduction, in-depth analysis, key takeaways,
-    and references.
-  expected_output: >
-    A full LinkedIn article draft of ~800 words with headings, bullets,
-    and hyperlinks to original sources in brazilian portuguese.
-  agent: newsletter_linkedin
-
-top_news_selection_task:
-  description: >
-    Score and rank all cleaned news items by relevance, novelty, and authority.
-    Identify the 2–3 most significant stories for the current cycle.
-  expected_output: >
-    A ranked list of the top 3 news items, each with justification
-    (scoring breakdown).
-  agent: top_news_picker
-
-video_script_task:
-  description: >
-    Generate a video script for a short explainer video covering the top news.
-    Structure should include intro, 3 main segments, summary and a CTA.
-  expected_output: >
-    A teleprompter-ready script in bullet format with timestamps
-    and speaker notes in brazilian portuguese.
-  agent: video_script_writer
+    Um conjunto de resumos detalhados e organizados para cada notícia, com:
+    - Título
+    - Subtítulo
+    - Resumo do conteúdo
+    - Data
+    - Fonte (URL)
+  agent: reporting_analyst
